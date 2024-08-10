@@ -110,7 +110,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   return;
                 }
 
-                // Replace with your OTP verification logic
+
                 final isOtpVerified = true;
 
                 if (isOtpVerified) {

@@ -12,9 +12,8 @@ class SplashScreen extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/images/BMW.png',
-              width: 200.w,
-              fit: BoxFit.fitWidth,
+              'assets/images/car.jpg',
+              fit: BoxFit.cover, // Ensure the image covers the entire screen
             ),
           ),
           Positioned.fill(
@@ -40,7 +39,7 @@ class SplashScreen extends StatelessWidget {
                   },
                   child: Text(
                     'Skip',
-                    style: GoogleFonts.roboto(
+                    style: GoogleFonts.poppins(
                       fontSize: 16.sp,
                       color: Colors.white,
                     ),

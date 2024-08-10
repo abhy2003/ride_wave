@@ -41,6 +41,8 @@ dependencies:
   google_fonts: ^6.2.1
   firebase_auth: ^4.16.0
   firebase_core: ^2.24.2
+  cloud_firestore: ^4.14.0
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
@@ -67,7 +69,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
      - assets/images/Ride Wave logo-02.png
-     - assets/images/BMW.png
+     - assets/images/car.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -80,11 +82,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-     - family: Montserrat
-       fonts:
-         - asset: assets/fonts/Montserrat-Regular.ttf
-         - asset: assets/fonts/Montserrat-Medium.ttf
+  #fonts:
+  #   - family: Montserrat
+  #     fonts:
+  #     - asset: assets/fonts/Montserrat-Regular.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:
