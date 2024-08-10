@@ -70,6 +70,10 @@ flutter:
   assets:
      - assets/images/Ride Wave logo-02.png
      - assets/images/car.jpg
+     - assets/icons/bottom_navigation/home_icon.png
+     - assets/icons/bottom_navigation/search_icon.png
+     - assets/icons/bottom_navigation/service_icon.png
+     - assets/images/Billy butcher pfp.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

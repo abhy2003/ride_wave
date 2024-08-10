@@ -13,7 +13,7 @@ class BannerImageController extends GetxController{
   void fetchBannerImage()async{
     final snapshot=await FirebaseFirestore.instance
         .collection('banner_image')
-        .orderBy('uploaded_at',descending: true)
+        .orderBy('upload_at',descending: true)
         .get();
 
     final List<BannerImageModel>images=snapshot.docs
