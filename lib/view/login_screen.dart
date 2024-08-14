@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart'; // Import GetX
 import 'package:firebase_auth/firebase_auth.dart';
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -116,20 +115,29 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       await FirebaseAuth.instance.verifyPhoneNumber(
                         phoneNumber: phoneNumber,
-                        verificationCompleted: (phoneAuthCredential) {},
-                        verificationFailed: (error) {
-                          log(error.toString());
+                        verificationCompleted: (PhoneAuthCredential credential) async {
+                          // This callback is called when the verification is automatically completed
+                          try {
+                            await FirebaseAuth.instance.signInWithCredential(credential);
+                            Get.offNamed('/homescreen');
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Sign-in failed: ${e.toString()}')),
+                            );
+                          }
+                        },
+                        verificationFailed: (FirebaseAuthException error) {
                           setState(() {
                             isLoading = false;
                           });
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text(
-                                  'Verification failed: ${error.message}'),
+                              content: Text('Verification failed: ${error.message}'),
                             ),
                           );
+                          log('Verification failed: ${error.message}');
                         },
-                        codeSent: (verificationId, forceResendingToken) {
+                        codeSent: (String verificationId, int? forceResendingToken) {
                           setState(() {
                             isLoading = false;
                           });
@@ -138,15 +146,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             'isRegisteredNumber': true,
                           });
                         },
-                        codeAutoRetrievalTimeout: (verificationId) {
-                          log("Auto Retrieval timeout");
+                        codeAutoRetrievalTimeout: (String verificationId) {
+                          log("Auto Retrieval timeout: $verificationId");
                         },
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text(
-                              'Invalid phone number format. Please enter in E.164 format.'),
+                          content: Text('Invalid phone number format. Please enter in E.164 format.'),
                         ),
                       );
                     }
@@ -154,8 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFC5FF39),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 40, vertical: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

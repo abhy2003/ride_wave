@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../models/phone_model.dart';
-import '../views/otp_screen.dart';
+import 'package:ride_wave/view/otp_screen.dart';
+import '../model/phone_otp_model.dart';
 
 class PhoneController extends GetxController {
   final phoneController = TextEditingController();
@@ -28,7 +28,7 @@ class PhoneController extends GetxController {
         },
         codeSent: (verificationId, forceResendingToken) {
           isLoading.value = false;
-          Get.to(() => OTPScreen(verificationId: verificationId));
+          Get.to(() => OtpVerificationScreen(verificationId: verificationId, isRegisteredNumber: true,));
         },
         codeAutoRetrievalTimeout: (verificationId) {
           // Handle auto retrieval timeout

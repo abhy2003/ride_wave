@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../views/home_screen.dart';
+
+import '../view/home_screen.dart';
 
 class OTPController extends GetxController {
   final otpController = TextEditingController();

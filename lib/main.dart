@@ -12,7 +12,6 @@ import 'package:ride_wave/view/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  Get.put(BannerImageController()); // Example dependency injection
   runApp(MyApp());
 }
 
@@ -31,11 +30,11 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         getPages: [
-          GetPage(name: '/', page: () => SplashScreen()),
+          GetPage(name: '/', page: () => HomeScreen()),
           GetPage(name: '/login', page: () => const LoginScreen()),
-          GetPage(name: '/otpverification', page: () =>  const OtpVerificationScreen(isRegisteredNumber: false)),
+          GetPage(name: '/otpverification', page: () =>  const OtpVerificationScreen(isRegisteredNumber: false, verificationId: '',)),
           GetPage(name: '/register', page: () => const Register()),
-          GetPage(name: '/homescreen', page: () =>  HomeScreen()),
+          // GetPage(name: '/homescreen', page: () =>  HomeScreen()),
         ],
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ride_wave/model/banner_image_model.dart';
 import 'package:get/get.dart';
-import 'package:ride_wave/model/banner_image_model.dart';
 class BannerImageController extends GetxController{
   var bannerimages=<BannerImageModel>[].obs;
   @override

@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +38,7 @@ class SplashScreen extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
+                    print("Moved to login page***********************************");
                     Get.offNamed('/login'); // Use GetX to navigate
                   },
                   child: Text(
