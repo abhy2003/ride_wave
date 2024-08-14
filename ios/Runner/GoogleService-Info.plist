@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>310244616336-4liehtd8tpbgkldg2cgd02tn8fd6cq55.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.310244616336-4liehtd8tpbgkldg2cgd02tn8fd6cq55</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAlglhJBcENnsQ2abgR7-2ChYdQGosK9Xs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>310244616336</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ridewave.rideWave</string>
+	<key>PROJECT_ID</key>
+	<string>ridewave-f5460</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ridewave-f5460.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:310244616336:ios:a8fe30db38619f94649015</string>
+</dict>
+</plist>

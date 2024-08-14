@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "310244616336",
+    "project_id": "ridewave-f5460",
+    "storage_bucket": "ridewave-f5460.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310244616336:android:cb5f663e0ff9345c649015",
+        "android_client_info": {
+          "package_name": "com.ridewave.ride_wave"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "310244616336-upgl03jb9vmqavh0c70lri509loie43h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6swUZxQBa27Bw2jQ2uM5IV-QMUpOxL3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "310244616336-upgl03jb9vmqavh0c70lri509loie43h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "310244616336-4liehtd8tpbgkldg2cgd02tn8fd6cq55.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ridewave.rideWave"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

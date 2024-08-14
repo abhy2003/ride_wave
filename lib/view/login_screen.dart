@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart'; // Import GetX
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,13 +15,20 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _mobileController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
 
   @override
   void dispose() {
-    _mobileController.dispose();
+    _phoneController.dispose();
     super.dispose();
+  }
+
+  // Function to validate the phone number format
+  bool validatePhoneNumber(String phoneNumber) {
+    final regex = RegExp(r'^\+[1-9]\d{1,14}$');
+    return regex.hasMatch(phoneNumber);
   }
 
   @override
@@ -35,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Image.asset('assets/images/Ride Wave logo-02.png', height: 200.h),
               TextFormField(
                 cursorColor: Colors.white54,
-                controller: _mobileController,
+                controller: _phoneController,
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
                   labelText: 'Phone Number',
@@ -92,17 +102,60 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
               ),
               const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () {
+              isLoading
+                  ? const CircularProgressIndicator()
+                  : ElevatedButton(
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    // Navigate using GetX
-                    Get.toNamed('/otpverification');
+                    String phoneNumber = '+91' + _phoneController.text.trim();
+
+                    if (validatePhoneNumber(phoneNumber)) {
+                      setState(() {
+                        isLoading = true;
+                      });
+
+                      await FirebaseAuth.instance.verifyPhoneNumber(
+                        phoneNumber: phoneNumber,
+                        verificationCompleted: (phoneAuthCredential) {},
+                        verificationFailed: (error) {
+                          log(error.toString());
+                          setState(() {
+                            isLoading = false;
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  'Verification failed: ${error.message}'),
+                            ),
+                          );
+                        },
+                        codeSent: (verificationId, forceResendingToken) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          Get.toNamed('/otpverification', arguments: {
+                            'verificationId': verificationId,
+                            'isRegisteredNumber': true,
+                          });
+                        },
+                        codeAutoRetrievalTimeout: (verificationId) {
+                          log("Auto Retrieval timeout");
+                        },
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              'Invalid phone number format. Please enter in E.164 format.'),
+                        ),
+                      );
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFC5FF39),
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 40, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

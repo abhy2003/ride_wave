@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
+  final String verificationId;
   final bool isRegisteredNumber;
 
-  const OtpVerificationScreen({Key? key, required this.isRegisteredNumber})
-      : super(key: key);
+  const OtpVerificationScreen({
+    Key? key,
+    required this.verificationId,
+    required this.isRegisteredNumber,
+  }) : super(key: key);
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
@@ -36,8 +41,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             const SizedBox(height: 25),
             const Text(
               'Mobile Verification',
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white54),
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white54),
             ),
             const SizedBox(height: 16),
             const Text(
@@ -63,11 +67,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       keyboardType: TextInputType.number,
                       maxLength: 1,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      // Allow only numbers
                       cursorColor: Colors.white54,
-                      // Set the cursor color
                       style: const TextStyle(color: Colors.white),
-                      // Set text color
                       onChanged: (value) {
                         if (value.isNotEmpty && i < 5) {
                           _focusNodes[i + 1].requestFocus();
@@ -99,37 +100,38 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 final enteredOtp = otpDigits.join();
 
                 if (enteredOtp.length < 6) {
-                  // Show error message
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Please enter the OTP')),
                   );
                   return;
                 }
 
+                try {
+                  final credential = PhoneAuthProvider.credential(
+                    verificationId: widget.verificationId,
+                    smsCode: enteredOtp,
+                  );
 
-                final isOtpVerified = true;
+                  await FirebaseAuth.instance.signInWithCredential(credential);
 
-                if (isOtpVerified) {
                   if (widget.isRegisteredNumber) {
                     Get.offNamed('/homescreen');
                   } else {
                     Get.offNamed('/register');
                   }
-                } else {
-                  // Show error message for incorrect OTP
+                } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Invalid OTP')),
+                    SnackBar(content: Text('Invalid OTP: ${e.toString()}')),
                   );
                 }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFC5FF39),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

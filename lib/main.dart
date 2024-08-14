@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         getPages: [
           GetPage(name: '/', page: () => SplashScreen()),
           GetPage(name: '/login', page: () => const LoginScreen()),
-          GetPage(name: '/otpverification', page: () => const OtpVerificationScreen(isRegisteredNumber: false)),
+          GetPage(name: '/otpverification', page: () =>  const OtpVerificationScreen(isRegisteredNumber: false)),
           GetPage(name: '/register', page: () => const Register()),
           GetPage(name: '/homescreen', page: () =>  HomeScreen()),
         ],
