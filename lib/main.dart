@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:ride_wave/controller/banner_image_controller.dart'; // Example controller
 import 'package:ride_wave/view/home_screen.dart';
 import 'package:ride_wave/view/login_screen.dart';
-import 'package:ride_wave/view/otp_screen.dart';
+import 'package:ride_wave/view/otp_verification_screen.dart';
 import 'package:ride_wave/view/register.dart';
 import 'package:ride_wave/view/splash_screen.dart';
 
@@ -30,11 +30,10 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         getPages: [
-          GetPage(name: '/', page: () => HomeScreen()),
-          GetPage(name: '/login', page: () => const LoginScreen()),
-          GetPage(name: '/otpverification', page: () =>  const OtpVerificationScreen(isRegisteredNumber: false, verificationId: '',)),
+          GetPage(name: '/', page: () => SplashScreen()),
+          GetPage(name: '/login', page: () => LoginScreen()),
           GetPage(name: '/register', page: () => const Register()),
-          // GetPage(name: '/homescreen', page: () =>  HomeScreen()),
+          GetPage(name: '/homescreen', page: () =>  HomeScreen()),
         ],
       ),
     );

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:lottie/lottie.dart';
 import '../controller/banner_image_controller.dart';
-import 'package:ride_wave/controller/banner_image_controller.dart'; // Import your BannerImageController
 
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
+
+  HomeScreen();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -125,48 +127,39 @@ class AppDrawer extends StatelessWidget {
       backgroundColor: Colors.black,
       child: Column(
         children: <Widget>[
-          // Header Section
           UserAccountsDrawerHeader(
-            accountName:
-            Text('Sandeep K', style: TextStyle(color: Colors.white)),
-            accountEmail: Text('Sanddeepkrishnan42@gmail.com',
-                style: TextStyle(color: Colors.white54)),
+            accountName: Text('Sandeep K', style: TextStyle(color: Colors.white)),
+            accountEmail: Text('Sanddeepkrishnan42@gmail.com', style: TextStyle(color: Colors.white54)),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white54,
-              backgroundImage:
-              AssetImage('assets/images/Billy butcher pfp.jpeg'),
-              // Use the asset image here
-              radius: 30, // Adjust radius if needed
+              backgroundImage: AssetImage('assets/images/Billy butcher pfp.jpeg'),
+              radius: 30,
             ),
             decoration: BoxDecoration(
               color: Colors.black,
             ),
           ),
-          // List Section
           Expanded(
             child: ListView(
               padding: EdgeInsets.zero,
               children: <Widget>[
                 ListTile(
                   leading: Icon(Icons.person, color: Colors.white54),
-                  title:
-                  Text('Profile', style: TextStyle(color: Colors.white54)),
+                  title: Text('Profile', style: TextStyle(color: Colors.white54)),
                   onTap: () {
                     // Navigate to Profile
                   },
                 ),
                 ListTile(
                   leading: Icon(Icons.directions_car, color: Colors.white54),
-                  title: Text('Live Trip',
-                      style: TextStyle(color: Colors.white54)),
+                  title: Text('Live Trip', style: TextStyle(color: Colors.white54)),
                   onTap: () {
                     // Navigate to Live Trip
                   },
                 ),
                 ListTile(
                   leading: Icon(Icons.history, color: Colors.white54),
-                  title: Text('Trip History',
-                      style: TextStyle(color: Colors.white54)),
+                  title: Text('Trip History', style: TextStyle(color: Colors.white54)),
                   onTap: () {
                     // Navigate to Trip History
                   },
@@ -174,32 +167,28 @@ class AppDrawer extends StatelessWidget {
                 Divider(color: Colors.white30),
                 ListTile(
                   leading: Icon(Icons.lock, color: Colors.white54),
-                  title: Text('Privacy Policy',
-                      style: TextStyle(color: Colors.white54)),
+                  title: Text('Privacy Policy', style: TextStyle(color: Colors.white54)),
                   onTap: () {
                     // Navigate to Privacy Policy
                   },
                 ),
                 ListTile(
                   leading: Icon(Icons.description, color: Colors.white54),
-                  title: Text('Terms and Conditions',
-                      style: TextStyle(color: Colors.white54)),
+                  title: Text('Terms and Conditions', style: TextStyle(color: Colors.white54)),
                   onTap: () {
                     // Navigate to Terms and Conditions
                   },
                 ),
                 ListTile(
                   leading: Icon(Icons.cancel, color: Colors.white54),
-                  title: Text('Cancellation',
-                      style: TextStyle(color: Colors.white54)),
+                  title: Text('Cancellation', style: TextStyle(color: Colors.white54)),
                   onTap: () {
                     // Navigate to Cancellation
                   },
                 ),
                 ListTile(
                   leading: Icon(Icons.contact_phone, color: Colors.white54),
-                  title: Text('Contact Us',
-                      style: TextStyle(color: Colors.white54)),
+                  title: Text('Contact Us', style: TextStyle(color: Colors.white54)),
                   onTap: () {
                     // Navigate to Contact Us
                   },
@@ -207,10 +196,9 @@ class AppDrawer extends StatelessWidget {
                 Divider(color: Colors.white30),
                 ListTile(
                   leading: Icon(Icons.logout, color: Colors.white54),
-                  title:
-                  Text('Logout', style: TextStyle(color: Colors.white54)),
+                  title: Text('Logout', style: TextStyle(color: Colors.white54)),
                   onTap: () {
-                    // Handle Logout
+                    _showLogoutDialog(context); // Call the logout function
                   },
                 ),
               ],
@@ -218,6 +206,59 @@ class AppDrawer extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Logout'),
+          content: Text('Are you sure you want to log out?'),
+          actions: [
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Get.back(); // Close the dialog
+              },
+            ),
+            TextButton(
+              child: Text('Logout'),
+              onPressed: () {
+                Get.back(); // Close the dialog
+                // Show Lottie animation dialog
+                _showLottieAnimationDialog(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showLottieAnimationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent closing by tapping outside
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent, // Make dialog background transparent
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Lottie.asset(
+                'assets/images/lottie/sampl_logout.json',
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Logging out...',
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
