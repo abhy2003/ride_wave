@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ride_wave/controller/banner_image_controller.dart'; // Example controller
+import 'package:ride_wave/controller/user_controller.dart';
 import 'package:ride_wave/view/home_screen.dart';
 import 'package:ride_wave/view/login_screen.dart';
 import 'package:ride_wave/view/otp_verification_screen.dart';
@@ -12,6 +13,7 @@ import 'package:ride_wave/view/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  Get.put(RegisterController(), permanent: true);
   runApp(MyApp());
 }
 

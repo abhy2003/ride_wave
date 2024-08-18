@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import '../controller/user_controller.dart';// Import the RegisterController
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -17,6 +18,8 @@ class _RegisterState extends State<Register> {
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   bool _agreeToTerms = false;
+
+  final RegisterController _registerController = Get.put(RegisterController());
 
   @override
   void dispose() {
@@ -80,6 +83,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(height: 16),
                   buildTextField(
                     labelText: 'Email Address',
+                    controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -118,21 +122,22 @@ class _RegisterState extends State<Register> {
                   ElevatedButton(
                     onPressed: _agreeToTerms
                         ? () {
-                            if (_formKey.currentState!.validate()) {
-                              // Access form data using _firstNameController, etc.
-
-                              // Navigate to the home page after successful registration
-                              Get.offNamed('/homescreen'); // Using named route
-                              // Get.off(() => HomeScreen()); // Using direct widget navigation
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                      'Please fill all fields and agree to the terms.'),
-                                ),
-                              );
-                            }
-                          }
+                      if (_formKey.currentState!.validate()) {
+                        // Save user data
+                        _registerController.saveUserData(
+                          _firstNameController.text.trim(),
+                          _lastNameController.text.trim(),
+                          _emailController.text.trim(),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                'Please fill all fields and agree to the terms.'),
+                          ),
+                        );
+                      }
+                    }
                         : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: myGreen,

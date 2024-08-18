@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // Import Cloud Firestore package
 import 'package:flutter/material.dart';
 import '../view/otp_verification_screen.dart';
 
@@ -15,7 +16,6 @@ class AuthController extends GetxController {
     return regex.hasMatch(phoneNumber);
   }
 
-  // Function to handle phone number verification
   Future<void> verifyPhoneNumber(BuildContext context) async {
     String phoneNumber = '+91' + phoneController.text.trim();
 
@@ -55,11 +55,21 @@ class AuthController extends GetxController {
         smsCode: otpController.text.trim(),
       );
 
-      await FirebaseAuth.instance.signInWithCredential(cred);
-      Get.offAllNamed('/register');
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(cred);
+      String userId = userCredential.user?.uid ?? '';
+
+      // Check if user exists in Firestore
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('user_data').doc(userId).get();
+
+      if (userDoc.exists) {
+        // User exists, navigate to HomeScreen
+        Get.offAllNamed('/homescreen');
+      } else {
+        // User does not exist, navigate to Register screen
+        Get.offAllNamed('/register');
+      }
     } catch (e) {
       log(e.toString());
-      isLoading(false);
       Get.snackbar('OTP verification failed', 'Please try again.');
     } finally {
       isLoading(false);
