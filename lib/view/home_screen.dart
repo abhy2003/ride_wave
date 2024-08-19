@@ -1,9 +1,11 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:lottie/lottie.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lottie/lottie.dart';
 import '../controller/banner_image_controller.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,105 +14,225 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0; // Define the _selectedIndex variable
   final BannerImageController controller = Get.put(BannerImageController());
-  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      _selectedIndex = index; // Update the selected index
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black, // Black background color
       appBar: AppBar(
-        title: Text('Taxi Booking App'),
-        backgroundColor: Color(0xFFC5FF39),
+        title: Text(
+          'Ride Wave',
+          style: GoogleFonts.poppins(
+            fontSize: 24.sp,
+            color: Colors.white, // White text color for visibility
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
-      drawer: AppDrawer(),
-      body: Column(
-        children: <Widget>[
-          Obx(() {
-            if (controller.bannerimages.isEmpty) {
-              return Center(child: CircularProgressIndicator());
-            }
+      drawer: AppDrawer(), // Use AppDrawer
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Search Bar Section
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: 'Where to?',
+                      hintStyle: TextStyle(color: Colors.white70),
+                      filled: true,
+                      fillColor: Colors.grey[800], // Dark gray for search bar background
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.r),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                SizedBox(width: 10.w),
+                Container(
+                  padding: EdgeInsets.all(12.r),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[800],
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Now',
+                        style: GoogleFonts.poppins(color: Colors.white),
+                      ),
+                      Icon(Icons.arrow_drop_down, color: Colors.white),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20.h),
 
-            return Container(
-              color: Colors.black,
-              child: CarouselSlider(
+            // Categories Section
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildCategoryCard('Trip'),
+                _buildCategoryCard('Intercity'),
+                _buildCategoryCard('Reserve'),
+                _buildCategoryCard('Rentals'),
+              ],
+            ),
+            SizedBox(height: 20.h),
+
+            // Banner Section
+            Obx(() {
+              if (controller.bannerimages.isEmpty) {
+                return Center(
+                  child: Text(
+                    'No banners found',
+                    style: GoogleFonts.poppins(color: Colors.white),
+                  ),
+                );
+              }
+              return CarouselSlider(
                 options: CarouselOptions(
-                  height: 170,
+                  height: 150.h,
                   autoPlay: true,
-                  aspectRatio: 16 / 9,
                   enlargeCenterPage: true,
+                  aspectRatio: 16 / 9,
+                  viewportFraction: 1.0,
+                  enableInfiniteScroll: true,
                 ),
                 items: controller.bannerimages.map((banner) {
                   return Builder(
                     builder: (BuildContext context) {
                       return Container(
                         width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        margin: EdgeInsets.symmetric(horizontal: 5.w),
                         decoration: BoxDecoration(
-                          color: Colors.amber,
+                          color: Colors.blue[100],
+                          borderRadius: BorderRadius.circular(10.r),
                         ),
-                        child:
-                            Image.network(banner.image_url, fit: BoxFit.cover),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.r),
+                          child: Image.network(
+                            banner.image_url,
+                            fit: BoxFit.cover,
+                            width: MediaQuery.of(context).size.width,
+                            height: 150.h,
+                          ),
+                        ),
                       );
                     },
                   );
                 }).toList(),
+              );
+            }),
+            SizedBox(height: 20.h),
+
+            // Ride Options Section
+            Text(
+              'Ride as you like it',
+              style: GoogleFonts.poppins(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
-            );
-          }),
-          Expanded(
-            child: Container(
-              color: Colors.black,
-              child: Center(
-                child: Text(
-                  'Welcome to the Taxi Booking App!',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
+            ),
+            SizedBox(height: 10.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildRideOptionCard('Book Auto', 'Everyday commute made effortless'),
+                _buildRideOptionCard('Book XL', 'Travel with luggage and friends'),
+              ],
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.grey[900], // Darker background for BottomNavigationBar
+        items: [
+          BottomNavigationBarItem(
+            icon: _selectedIndex == 0
+                ? ImageIcon(AssetImage('assets/icons/bottom_navigation/home_icon.png'))
+                : ImageIcon(AssetImage('assets/icons/bottom_navigation/home_icon.png')),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: _selectedIndex == 1
+                ? ImageIcon(AssetImage('assets/icons/bottom_navigation/search_icon.png'))
+                : ImageIcon(AssetImage('assets/icons/bottom_navigation/search_icon.png')),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: _selectedIndex == 2
+                ? ImageIcon(AssetImage('assets/icons/bottom_navigation/service_icon.png'))
+                : ImageIcon(AssetImage('assets/icons/bottom_navigation/service_icon.png')),
+            label: 'Service',
+          ),
+        ],
+        currentIndex: _selectedIndex, // Set the selected index
+        onTap: _onItemTapped, // Handle item tap
+      ),
+    );
+  }
+
+  // Helper method for category cards
+  Widget _buildCategoryCard(String title) {
+    return Container(
+      padding: EdgeInsets.all(8.r),
+      decoration: BoxDecoration(
+        color: Colors.grey[800], // Darker background for category cards
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      child: Text(
+        title,
+        style: GoogleFonts.poppins(color: Colors.white),
+      ),
+    );
+  }
+
+  // Helper method for ride option cards
+  Widget _buildRideOptionCard(String title, String subtitle) {
+    return Container(
+      width: 150.w,
+      padding: EdgeInsets.all(12.r),
+      decoration: BoxDecoration(
+        color: Colors.grey[800], // Darker background for ride option cards
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: GoogleFonts.poppins(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(height: 5.h),
+          Text(
+            subtitle,
+            style: GoogleFonts.poppins(
+              fontSize: 12.sp,
+              color: Colors.white70,
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: Container(
-        color: const Color(0xFF000000),
-        child: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: _selectedIndex == 0
-                  ? ImageIcon(AssetImage(
-                      'assets/icons/bottom_navigation/home_icon.png'))
-                  : ImageIcon(AssetImage(
-                      'assets/icons/bottom_navigation/home_icon.png')),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: _selectedIndex == 1
-                  ? ImageIcon(AssetImage(
-                      'assets/icons/bottom_navigation/search_icon.png'))
-                  : ImageIcon(AssetImage(
-                      'assets/icons/bottom_navigation/search_icon.png')),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: _selectedIndex == 2
-                  ? ImageIcon(AssetImage(
-                      'assets/icons/bottom_navigation/service_icon.png'))
-                  : ImageIcon(AssetImage(
-                      'assets/icons/bottom_navigation/service_icon.png')),
-              label: 'Service',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white70,
-          onTap: _onItemTapped,
-          backgroundColor: Colors.transparent,
-        ),
       ),
     );
   }
@@ -124,7 +246,7 @@ class AppDrawer extends StatelessWidget {
     User? user = _auth.currentUser;
     if (user != null) {
       DocumentSnapshot userDoc =
-          await _firestore.collection('user_data').doc(user.uid).get();
+      await _firestore.collection('user_data').doc(user.uid).get();
       String name = userDoc['name'] ?? 'No Name';
       String email = userDoc['email'] ?? 'No Email';
       return {'name': name, 'email': email};
@@ -153,13 +275,13 @@ class AppDrawer extends StatelessWidget {
               children: <Widget>[
                 UserAccountsDrawerHeader(
                   accountName:
-                      Text(accountName, style: TextStyle(color: Colors.white)),
+                  Text(accountName, style: TextStyle(color: Colors.white)),
                   accountEmail: Text(accountEmail,
                       style: TextStyle(color: Colors.white54)),
                   currentAccountPicture: CircleAvatar(
                     backgroundColor: Colors.white54,
                     backgroundImage:
-                        AssetImage('assets/images/Billy butcher pfp.jpeg'),
+                    AssetImage('assets/images/Billy butcher pfp.jpeg'),
                     radius: 30,
                   ),
                   decoration: BoxDecoration(
@@ -180,7 +302,7 @@ class AppDrawer extends StatelessWidget {
                       ),
                       ListTile(
                         leading:
-                            Icon(Icons.directions_car, color: Colors.white54),
+                        Icon(Icons.directions_car, color: Colors.white54),
                         title: Text('Live Trip',
                             style: TextStyle(color: Colors.white54)),
                         onTap: () {
@@ -222,7 +344,7 @@ class AppDrawer extends StatelessWidget {
                       ),
                       ListTile(
                         leading:
-                            Icon(Icons.contact_phone, color: Colors.white54),
+                        Icon(Icons.contact_phone, color: Colors.white54),
                         title: Text('Contact Us',
                             style: TextStyle(color: Colors.white54)),
                         onTap: () {
