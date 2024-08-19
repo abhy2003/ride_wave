@@ -46,7 +46,8 @@ class LoginScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   enabledBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     borderSide: BorderSide(color: Colors.white54),
@@ -82,26 +83,26 @@ class LoginScreen extends StatelessWidget {
               Obx(() => authController.isLoading.value
                   ? const CircularProgressIndicator()
                   : ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    authController.verifyPhoneNumber(context);
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFC5FF39),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 40, vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: Text(
-                  'Login Now',
-                  style: GoogleFonts.poppins(
-                    color: Colors.black,
-                  ),
-                ),
-              )),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          authController.verifyPhoneNumber(context);
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFC5FF39),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: Text(
+                        'Login Now',
+                        style: GoogleFonts.poppins(
+                          color: Colors.black,
+                        ),
+                      ),
+                    )),
             ],
           ),
         ),

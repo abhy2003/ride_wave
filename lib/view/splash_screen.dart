@@ -38,7 +38,8 @@ class SplashScreen extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    print("Moved to login page***********************************");
+                    print(
+                        "Moved to login page***********************************");
                     Get.offNamed('/login'); // Use GetX to navigate
                   },
                   child: Text(

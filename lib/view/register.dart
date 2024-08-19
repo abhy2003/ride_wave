@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
-import '../controller/user_controller.dart';// Import the RegisterController
+import '../controller/user_controller.dart'; // Import the RegisterController
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -122,22 +122,22 @@ class _RegisterState extends State<Register> {
                   ElevatedButton(
                     onPressed: _agreeToTerms
                         ? () {
-                      if (_formKey.currentState!.validate()) {
-                        // Save user data
-                        _registerController.saveUserData(
-                          _firstNameController.text.trim(),
-                          _lastNameController.text.trim(),
-                          _emailController.text.trim(),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                                'Please fill all fields and agree to the terms.'),
-                          ),
-                        );
-                      }
-                    }
+                            if (_formKey.currentState!.validate()) {
+                              // Save user data
+                              _registerController.saveUserData(
+                                _firstNameController.text.trim(),
+                                _lastNameController.text.trim(),
+                                _emailController.text.trim(),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      'Please fill all fields and agree to the terms.'),
+                                ),
+                              );
+                            }
+                          }
                         : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: myGreen,

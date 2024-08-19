@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../controller/auth_controller.dart';
 
 class OtpVerificationScreen extends StatelessWidget {
@@ -11,6 +13,7 @@ class OtpVerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
@@ -19,34 +22,57 @@ class OtpVerificationScreen extends StatelessWidget {
             const Text(
               "We have sent an OTP to your phone. Please verify.",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 18, color: Colors.white54),
             ),
             const SizedBox(height: 40),
             TextField(
               controller: authController.otpController,
               keyboardType: TextInputType.number,
+              cursorColor: Colors.white54,
               decoration: InputDecoration(
                 fillColor: Colors.grey.withOpacity(0.25),
                 filled: true,
                 hintText: "Enter OTP",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
+                hintStyle: GoogleFonts.poppins(color: Colors.white54),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: const BorderSide(color: Colors.white54),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: const BorderSide(color: Colors.white54),
                 ),
               ),
+              style: GoogleFonts.poppins(color: Colors.white54),
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
             ),
             const SizedBox(height: 20),
             Obx(() => authController.isLoading.value
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
-              onPressed: () {
-                authController.verifyOtp(verificationId);
-              },
-              child: const Text(
-                "Verify",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-              ),
-            )),
+                    onPressed: () {
+                      authController.verifyOtp(verificationId);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFC5FF39),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text(
+                      "Verify",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black),
+                    ),
+                  )),
           ],
         ),
       ),

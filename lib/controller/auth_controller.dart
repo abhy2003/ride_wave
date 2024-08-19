@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Cloud Firestore package
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../view/otp_verification_screen.dart';
 
@@ -55,11 +55,15 @@ class AuthController extends GetxController {
         smsCode: otpController.text.trim(),
       );
 
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(cred);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(cred);
       String userId = userCredential.user?.uid ?? '';
 
       // Check if user exists in Firestore
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('user_data').doc(userId).get();
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('user_data')
+          .doc(userId)
+          .get();
 
       if (userDoc.exists) {
         // User exists, navigate to HomeScreen

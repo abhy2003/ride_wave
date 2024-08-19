@@ -54,7 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: BoxDecoration(
                           color: Colors.amber,
                         ),
-                        child: Image.network(banner.image_url, fit: BoxFit.cover),
+                        child:
+                            Image.network(banner.image_url, fit: BoxFit.cover),
                       );
                     },
                   );
@@ -81,20 +82,26 @@ class _HomeScreenState extends State<HomeScreen> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: _selectedIndex == 0
-                  ? ImageIcon(AssetImage('assets/icons/bottom_navigation/home_icon.png'))
-                  : ImageIcon(AssetImage('assets/icons/bottom_navigation/home_icon.png')),
+                  ? ImageIcon(AssetImage(
+                      'assets/icons/bottom_navigation/home_icon.png'))
+                  : ImageIcon(AssetImage(
+                      'assets/icons/bottom_navigation/home_icon.png')),
               label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: _selectedIndex == 1
-                  ? ImageIcon(AssetImage('assets/icons/bottom_navigation/search_icon.png'))
-                  : ImageIcon(AssetImage('assets/icons/bottom_navigation/search_icon.png')),
+                  ? ImageIcon(AssetImage(
+                      'assets/icons/bottom_navigation/search_icon.png'))
+                  : ImageIcon(AssetImage(
+                      'assets/icons/bottom_navigation/search_icon.png')),
               label: 'Search',
             ),
             BottomNavigationBarItem(
               icon: _selectedIndex == 2
-                  ? ImageIcon(AssetImage('assets/icons/bottom_navigation/service_icon.png'))
-                  : ImageIcon(AssetImage('assets/icons/bottom_navigation/service_icon.png')),
+                  ? ImageIcon(AssetImage(
+                      'assets/icons/bottom_navigation/service_icon.png'))
+                  : ImageIcon(AssetImage(
+                      'assets/icons/bottom_navigation/service_icon.png')),
               label: 'Service',
             ),
           ],
@@ -116,7 +123,8 @@ class AppDrawer extends StatelessWidget {
   Future<Map<String, String>> _getUserData() async {
     User? user = _auth.currentUser;
     if (user != null) {
-      DocumentSnapshot userDoc = await _firestore.collection('user_data').doc(user.uid).get();
+      DocumentSnapshot userDoc =
+          await _firestore.collection('user_data').doc(user.uid).get();
       String name = userDoc['name'] ?? 'No Name';
       String email = userDoc['email'] ?? 'No Email';
       return {'name': name, 'email': email};
@@ -134,7 +142,9 @@ class AppDrawer extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}', style: TextStyle(color: Colors.white)));
+            return Center(
+                child: Text('Error: ${snapshot.error}',
+                    style: TextStyle(color: Colors.white)));
           } else {
             String accountName = snapshot.data?['name'] ?? 'No Name';
             String accountEmail = snapshot.data?['email'] ?? 'No Email';
@@ -142,11 +152,14 @@ class AppDrawer extends StatelessWidget {
             return Column(
               children: <Widget>[
                 UserAccountsDrawerHeader(
-                  accountName: Text(accountName, style: TextStyle(color: Colors.white)),
-                  accountEmail: Text(accountEmail, style: TextStyle(color: Colors.white54)),
+                  accountName:
+                      Text(accountName, style: TextStyle(color: Colors.white)),
+                  accountEmail: Text(accountEmail,
+                      style: TextStyle(color: Colors.white54)),
                   currentAccountPicture: CircleAvatar(
                     backgroundColor: Colors.white54,
-                    backgroundImage: AssetImage('assets/images/Billy butcher pfp.jpeg'),
+                    backgroundImage:
+                        AssetImage('assets/images/Billy butcher pfp.jpeg'),
                     radius: 30,
                   ),
                   decoration: BoxDecoration(
@@ -159,21 +172,25 @@ class AppDrawer extends StatelessWidget {
                     children: <Widget>[
                       ListTile(
                         leading: Icon(Icons.person, color: Colors.white54),
-                        title: Text('Profile', style: TextStyle(color: Colors.white54)),
+                        title: Text('Profile',
+                            style: TextStyle(color: Colors.white54)),
                         onTap: () {
                           // Navigate to Profile
                         },
                       ),
                       ListTile(
-                        leading: Icon(Icons.directions_car, color: Colors.white54),
-                        title: Text('Live Trip', style: TextStyle(color: Colors.white54)),
+                        leading:
+                            Icon(Icons.directions_car, color: Colors.white54),
+                        title: Text('Live Trip',
+                            style: TextStyle(color: Colors.white54)),
                         onTap: () {
                           // Navigate to Live Trip
                         },
                       ),
                       ListTile(
                         leading: Icon(Icons.history, color: Colors.white54),
-                        title: Text('Trip History', style: TextStyle(color: Colors.white54)),
+                        title: Text('Trip History',
+                            style: TextStyle(color: Colors.white54)),
                         onTap: () {
                           // Navigate to Trip History
                         },
@@ -181,28 +198,33 @@ class AppDrawer extends StatelessWidget {
                       Divider(color: Colors.white30),
                       ListTile(
                         leading: Icon(Icons.lock, color: Colors.white54),
-                        title: Text('Privacy Policy', style: TextStyle(color: Colors.white54)),
+                        title: Text('Privacy Policy',
+                            style: TextStyle(color: Colors.white54)),
                         onTap: () {
                           // Navigate to Privacy Policy
                         },
                       ),
                       ListTile(
                         leading: Icon(Icons.description, color: Colors.white54),
-                        title: Text('Terms and Conditions', style: TextStyle(color: Colors.white54)),
+                        title: Text('Terms and Conditions',
+                            style: TextStyle(color: Colors.white54)),
                         onTap: () {
                           // Navigate to Terms and Conditions
                         },
                       ),
                       ListTile(
                         leading: Icon(Icons.cancel, color: Colors.white54),
-                        title: Text('Cancellation', style: TextStyle(color: Colors.white54)),
+                        title: Text('Cancellation',
+                            style: TextStyle(color: Colors.white54)),
                         onTap: () {
                           // Navigate to Cancellation
                         },
                       ),
                       ListTile(
-                        leading: Icon(Icons.contact_phone, color: Colors.white54),
-                        title: Text('Contact Us', style: TextStyle(color: Colors.white54)),
+                        leading:
+                            Icon(Icons.contact_phone, color: Colors.white54),
+                        title: Text('Contact Us',
+                            style: TextStyle(color: Colors.white54)),
                         onTap: () {
                           // Navigate to Contact Us
                         },
@@ -210,7 +232,8 @@ class AppDrawer extends StatelessWidget {
                       Divider(color: Colors.white30),
                       ListTile(
                         leading: Icon(Icons.logout, color: Colors.white54),
-                        title: Text('Logout', style: TextStyle(color: Colors.white54)),
+                        title: Text('Logout',
+                            style: TextStyle(color: Colors.white54)),
                         onTap: () {
                           _showLogoutDialog(context);
                         },
