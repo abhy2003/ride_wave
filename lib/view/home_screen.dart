@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lottie/lottie.dart';
+import 'package:ride_wave/view/splash_screen.dart';
 import '../controller/banner_image_controller.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             color: Colors.white, // White text color for visibility
           ),
         ),
+        iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -48,19 +50,26 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search, color: Colors.white),
-                      hintText: 'Where to?',
-                      hintStyle: TextStyle(color: Colors.white70),
-                      filled: true,
-                      fillColor: Colors.grey[800], // Dark gray for search bar background
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.r),
-                        borderSide: BorderSide.none,
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(SplashScreen());
+                    },
+                    child: AbsorbPointer( 
+                      child: TextField(
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search, color: Colors.white),
+                          hintText: 'Where to?',
+                          hintStyle: TextStyle(color: Colors.white70),
+                          filled: true,
+                          fillColor: Colors.grey[800],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
-                    style: TextStyle(color: Colors.white),
                   ),
                 ),
                 SizedBox(width: 10.w),
@@ -84,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(height: 20.h),
 
-            // Categories Section
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -185,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
         currentIndex: _selectedIndex, // Set the selected index
-        onTap: _onItemTapped, // Handle item tap
+        onTap: _onItemTapped,unselectedItemColor: Colors.white,selectedItemColor: Color(0xFFC5FF39), // Handle item tap
       ),
     );
   }
@@ -257,6 +266,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+
       backgroundColor: Colors.black,
       child: FutureBuilder<Map<String, String>>(
         future: _getUserData(),

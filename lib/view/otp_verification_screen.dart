@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import '../controller/auth_controller.dart';
 
 class OtpVerificationScreen extends StatelessWidget {
@@ -52,7 +53,13 @@ class OtpVerificationScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Obx(() => authController.isLoading.value
-                ? const CircularProgressIndicator()
+                ? Lottie.asset(
+                    'assets/images/lottie/loading.json',
+                    // Replace with the path to your Lottie file
+                    width: 70.0,
+                    height: 70.0,
+                    fit: BoxFit.fill,
+                  )
                 : ElevatedButton(
                     onPressed: () {
                       authController.verifyOtp(verificationId);

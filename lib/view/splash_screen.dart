@@ -42,13 +42,7 @@ class SplashScreen extends StatelessWidget {
                         "Moved to login page***********************************");
                     Get.offNamed('/login'); // Use GetX to navigate
                   },
-                  child: Text(
-                    'Skip',
-                    style: GoogleFonts.poppins(
-                      fontSize: 16.sp,
-                      color: Colors.white,
-                    ),
-                  ),
+                  child: Text(""),
                 ),
               ],
             ),
