@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lottie/lottie.dart';
+import 'package:ride_wave/view/booking.dart';
 import 'package:ride_wave/view/splash_screen.dart';
 import '../controller/banner_image_controller.dart';
 
@@ -52,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(SplashScreen());
+                      Get.to(BookingScreen());
                     },
                     child: AbsorbPointer( 
                       child: TextField(

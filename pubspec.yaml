@@ -78,6 +78,8 @@ flutter:
      - assets/images/lottie/log_out.json
      - assets/images/lottie/sampl_logout.json
      - assets/images/lottie/loading.json
+     - assets/images/map_image.jpeg
+     - assets/images/lamorgini.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
