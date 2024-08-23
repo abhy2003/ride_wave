@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,9 +7,25 @@ import 'package:google_fonts/google_fonts.dart';
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
+  void _checkAuthenticationStatus() async {
+    await Future.delayed(Duration(seconds: 2)); // Simulate a delay
+
+    // Get the current user
+    User? user = FirebaseAuth.instance.currentUser;
+
+    // If the user is logged in, navigate to the home page
+    if (user != null) {
+      Get.offNamed('/home'); // Replace with your home route
+    } else {
+      Get.offNamed('/login');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    _checkAuthenticationStatus();
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(

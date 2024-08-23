@@ -10,12 +10,16 @@ class AuthController extends GetxController {
   final phoneController = TextEditingController();
   final otpController = TextEditingController();
 
+  String? _verificationId;
+  int? _forceResendingToken;
+
   // Function to validate the phone number format
   bool validatePhoneNumber(String phoneNumber) {
     final regex = RegExp(r'^\+[1-9]\d{1,14}$');
     return regex.hasMatch(phoneNumber);
   }
 
+  // Function to verify the phone number and send the OTP
   Future<void> verifyPhoneNumber(BuildContext context) async {
     String phoneNumber = '+91' + phoneController.text.trim();
 
@@ -31,6 +35,8 @@ class AuthController extends GetxController {
           Get.snackbar('Verification failed', error.message ?? 'Error');
         },
         codeSent: (verificationId, forceResendingToken) {
+          _verificationId = verificationId;
+          _forceResendingToken = forceResendingToken;
           isLoading(false);
           Get.to(() => OtpVerificationScreen(verificationId: verificationId));
         },
@@ -56,7 +62,7 @@ class AuthController extends GetxController {
       );
 
       UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(cred);
+      await FirebaseAuth.instance.signInWithCredential(cred);
       String userId = userCredential.user?.uid ?? '';
 
       // Check if user exists in Firestore
@@ -77,6 +83,40 @@ class AuthController extends GetxController {
       Get.snackbar('OTP verification failed', 'Please try again.');
     } finally {
       isLoading(false);
+    }
+  }
+
+  // Function to resend OTP
+  Future<void> resendOtp() async {
+    String phoneNumber = '+91' + phoneController.text.trim();
+
+    if (_forceResendingToken != null) {
+      isLoading(true);
+
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        forceResendingToken: _forceResendingToken,
+        verificationCompleted: (phoneAuthCredential) {},
+        verificationFailed: (error) {
+          log(error.toString());
+          isLoading(false);
+          Get.snackbar('Resend failed', error.message ?? 'Error');
+        },
+        codeSent: (verificationId, forceResendingToken) {
+          _verificationId = verificationId;
+          _forceResendingToken = forceResendingToken;
+          isLoading(false);
+          Get.snackbar('OTP Resent', 'A new OTP has been sent to your phone.');
+        },
+        codeAutoRetrievalTimeout: (verificationId) {
+          log("Auto Retrieval timeout");
+        },
+      );
+    } else {
+      Get.snackbar(
+        'Resend not allowed',
+        'Please wait before requesting a new OTP.',
+      );
     }
   }
 }

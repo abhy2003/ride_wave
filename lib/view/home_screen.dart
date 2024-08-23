@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lottie/lottie.dart';
 import 'package:ride_wave/view/booking.dart';
-import 'package:ride_wave/view/splash_screen.dart';
 import '../controller/banner_image_controller.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -368,7 +367,7 @@ class AppDrawer extends StatelessWidget {
                         title: Text('Logout',
                             style: TextStyle(color: Colors.white54)),
                         onTap: () {
-                          _showLogoutDialog(context);
+                          _showLottieAnimationDialog(context);
                         },
                       ),
                     ],
@@ -382,32 +381,33 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-  void _showLogoutDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Logout'),
-          content: Text('Are you sure you want to log out?'),
-          actions: [
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Get.back();
-              },
-            ),
-            TextButton(
-              child: Text('Logout'),
-              onPressed: () {
-                Get.back();
-                _showLottieAnimationDialog(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // void _showLogoutDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('Logout'),
+  //         content: Text('Are you sure you want to log out?'),
+  //         actions: [
+  //           TextButton(
+  //             child: Text('Cancel'),
+  //             onPressed: () {
+  //               Get.back();
+  //             },
+  //           ),
+  //           TextButton(
+  //             child: Text('Logout'),
+  //             onPressed: () {
+  //               Get.back();
+  //               _showLottieAnimationDialog(context);
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+
 
   void _showLottieAnimationDialog(BuildContext context) {
     showDialog(
@@ -431,6 +431,10 @@ class AppDrawer extends StatelessWidget {
           ),
         );
       },
-    );
+    ).then((_) {
+      // Perform the logout after the animation
+      _auth.signOut();
+      Get.offAllNamed('/login'); // Redirect to login screen
+    });
   }
 }
