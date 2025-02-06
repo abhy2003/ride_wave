@@ -50,41 +50,6 @@ Ride Wave is an Uber-like online taxi booking application built using Flutter an
    flutter run
    ```
 
-## Firestore Collections
-
-### `users`
-| Field        | Type   | Description |
-|-------------|--------|-------------|
-| `userId`    | String | Unique user ID |
-| `name`      | String | User’s name |
-| `phone`     | String | User’s phone number |
-| `location`  | Map    | Last known location |
-
-### `drivers`
-| Field        | Type   | Description |
-|-------------|--------|-------------|
-| `driverId`  | String | Unique driver ID |
-| `name`      | String | Driver’s name |
-| `phone`     | String | Driver’s phone number |
-| `vehicle`   | String | Vehicle details |
-| `location`  | Map    | Current location |
-
-### `trip_requests`
-| Field         | Type   | Description |
-|--------------|--------|-------------|
-| `tripId`     | String | Unique trip ID |
-| `userId`     | String | User ID who requested the trip |
-| `driverId`   | String | Assigned driver ID |
-| `pickupLat`  | Double | Pickup latitude |
-| `pickupLng`  | Double | Pickup longitude |
-| `dropLat`    | Double | Drop latitude |
-| `dropLng`    | Double | Drop longitude |
-| `fare`       | Double | Estimated fare |
-| `tripStatus` | String | Status (`requested`, `accepted`, `completed`, etc.) |
-
-## Screenshots
-_Add screenshots here_
-
 ## Future Enhancements
 - **Payment Integration** (Razorpay/Stripe)
 - **Ride Sharing** (Pool rides)
@@ -94,8 +59,8 @@ _Add screenshots here_
 Feel free to submit pull requests or report issues in the repository.
 
 ## Contact
-For any queries, reach out to me at **ridewave210@gmail.com**.
+For any queries, reach out to me at **bijuabhishek530@gmail.com**.
 
 ---
-Made with ❤️ using Flutter.
+
 
